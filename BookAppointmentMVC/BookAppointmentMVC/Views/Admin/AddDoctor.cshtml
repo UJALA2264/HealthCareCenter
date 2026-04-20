@@ -1,0 +1,109 @@
+﻿@model DoctorViewModel
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "_PatientLayout";
+}
+<style>
+    #heading {
+        text-align: center;
+        font-size: 25px;
+        background-color: #7488f2;
+        font-family: serif;
+        color: aliceblue;
+        border-radius: 6px;
+/*         margin-top: 5%;
+ */    }
+</style>
+<div class="row mt-3" style="text-align: end;">
+
+    @using (Html.BeginForm("AddDoctor", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="col-sm-1"></div>
+    <div class="col-sm-10">
+            <div class="card">
+                <div id="heading">
+                   Add Doctor
+                </div>
+                <div class="card-body">
+
+                    <div class="row mt-2">
+                        <div class="col-sm-2">
+                            <label asp-for="FullName">Name</label>
+                        </div>
+                        <div class="col-sm-3">
+                            <input asp-for="FullName" class="form-control" required />
+                            <span asp-validation-for="FullName" class="text-danger"></span>
+                        </div>
+                        <div class="col-sm-2">
+                            <label asp-for="ExperienceYears">Experince</label>
+                        </div>
+                        <div class="col-sm-3">
+                            <input asp-for="ExperienceYears" class="form-control" required />
+                            <span asp-validation-for="ExperienceYears" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <div class="col-sm-2">
+                            <label asp-for="Qualifications">Qualifications</label>
+                        </div>
+                        <div class="col-sm-3">
+                            <input asp-for="Qualifications" class="form-control" required />
+                            <span asp-validation-for="Qualifications" class="text-danger"></span>
+                        </div>
+                        <div class="col-sm-2">
+                            <label asp-for="Summary">Summary</label>
+                        </div>
+                        <div class="col-sm-3">
+                            <input asp-for="Summary" class="form-control" required />
+                            <span asp-validation-for="Summary" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <div class="col-sm-2">
+                            <label asp-for="SpecilizationId">Specalization</label>
+                        </div>
+                        <div class="col-sm-3">
+                            <select asp-for="SpecilizationId" asp-items="Model.Specalizations" class="form-select">
+                                <option value="">-- Select --</option>
+                            </select>
+                            <span asp-validation-for="SpecilizationId" class="text-danger"></span>
+                        </div>
+                        <div class="col-sm-2">
+                            <label asp-for="HealthCareCenterId">HealthCenter</label>
+                        </div>
+                        <div class="col-sm-3">
+                            <select asp-for="HealthCareCenterId" asp-items="Model.HealthCareCenters" class="form-select">
+                                <option value="">-- Select --</option>
+                            </select>
+                            <span asp-validation-for="HealthCareCenterId" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-sm-2">
+                            <label asp-for="ProfileImage">Image</label>
+                        </div>
+                        <div class="col-sm-3">
+                            <input asp-for="ProfileImage" type="file" class="form-control" required />
+                            <span asp-validation-for="ProfileImage" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-sm-4"></div>
+                        <div class="col-sm-4" style="text-align:center;">
+                            <button type="submit" class="btn btn-outline-success">Submit</button>
+
+                        </div>
+
+                        <div class="col-sm-4"></div>
+
+                    </div>
+                </div>
+
+            </div>
+
+    </div>
+    <div class="col-sm-1"></div>
+}
+</div>

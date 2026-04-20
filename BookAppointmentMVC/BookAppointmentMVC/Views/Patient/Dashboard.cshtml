@@ -1,0 +1,66 @@
+﻿@model IEnumerable<PatientAppointment>
+
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "_PatientLayout";
+
+}
+
+<style>
+    #heading {
+        text-align: center;
+        font-size: 25px;
+        background-color: #7488f2;
+        font-family: serif;
+        color: aliceblue;
+        border-radius: 6px;
+        margin-top: 5%;
+    }
+</style>
+<div class="row">
+    <div class="col-sm-1"></div>
+    <div class="col-sm-10">
+        <div id="heading">Your UpComing Appointment</div>
+        <table class="table table-bordered mt-2">
+            <thead>
+                <tr>
+                    <th>Doctor</th>
+                    <th>Patient</th>
+                    <th>Date</th>
+                    <th>Slot Start</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @if(Model !=null && Model.Any())
+                {
+                    foreach (var ap in Model)
+                    {
+
+                        <tr>
+                            <td>@ap.DoctorName</td>
+                            <td>@ap.PatientName</td>
+                            <td>@ap.Date.ToString("yyyy-MM-dd")</td>
+                            <td>@ap.SlotStartTime.ToString(@"hh\:mm")</td>
+                            <td>@ap.Status</td>
+
+                        </tr>
+
+                    }
+                }
+                else
+                {
+                    <tr><td colspan="5" class="text-danger align-content-center">
+                            There is not any Appointment.
+                    </td>
+                        </tr>
+                }
+
+            </tbody>
+        </table>
+
+    </div>
+    <div class="col-sm-1"></div>
+</div>
+

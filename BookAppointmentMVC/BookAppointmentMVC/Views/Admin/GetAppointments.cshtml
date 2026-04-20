@@ -1,0 +1,65 @@
+﻿@model IEnumerable<AppointmentDetails>
+@{
+    ViewBag.Title = "Appointment";
+    Layout = "_PatientLayout";
+}
+
+<style>
+    #heading {
+        text-align: center;
+        font-size: 25px;
+        background-color: #7488f2;
+        font-family: serif;
+        color: aliceblue;
+        border-radius: 6px;
+        margin-top: 5%;
+    }
+</style>
+<div class="row">
+    <div class="col-sm-1"></div>
+    <div class="col-sm-10">
+        <div id="heading">UpComing Appointment</div>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Doctor</th>
+            <th>Patient</th>
+            <th>Date</th>
+            <th>Slot Start</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var ap in Model)
+        {
+            @using (Html.BeginForm("UpdateStatus", "Admin", FormMethod.Post))
+            {
+                <tr>
+                    <td>@ap.DoctorName</td>
+                    <td>@ap.PatientName</td>
+                    <td>@ap.Date.ToString("yyyy-MM-dd")</td>
+                    <td>@ap.SlotStartTime.ToString(@"hh\:mm")</td>
+                    <td>
+                        @Html.Hidden("AppointmentId", ap.AppointmentId)
+
+                        @Html.DropDownList(
+                            "StatusId",                    // name posted to controller
+                            ap.statusOptions,              // items: Value must be the status ID
+                            // ap.StatusId.ToString(),        // preselected value from DB
+                            new { @class = "form-control" }
+                        )
+                    </td>
+                    <td>
+                        <button type="submit" class="btn btn-primary btn-sm mt-1">Save</button>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+</div>
+    <div class="col-sm-1"></div>
+    </div>
+

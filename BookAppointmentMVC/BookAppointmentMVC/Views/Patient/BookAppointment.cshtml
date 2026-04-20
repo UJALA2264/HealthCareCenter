@@ -1,0 +1,76 @@
+﻿@model DoctorDetailsVm
+@{
+    ViewBag.Title = "Book Appointment";
+    Layout = "_PatientLayout";
+}
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+
+
+<div class="card mb-4 shadow-sm">
+    <div class="row g-0">
+        <div class="col-md-4">
+            <img src="@Model.ImageUrl" class="img-fluid rounded-start" alt="Doctor image" style="height: 100%; object-fit: cover;" />
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h4 class="card-title">@Model.FullName</h4>
+                <p class="card-text"><strong>Specialization:</strong> @Model.Specialization</p>
+                <p class="card-text"><strong>Center:</strong> @Model.Center</p>
+                <p class="card-text"><strong>Experience:</strong> @Model.ExperienceYears years</p>
+                <p class="card-text text-muted">@Model.Summary</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h5 class="mb-3">Availability for next 7 days</h5>
+
+@if (Model.Slots == null || !Model.Slots.Any())
+{
+    <div class="alert alert-warning">No slots available for the next 7 days.</div>
+}
+else
+{
+    // Group slots by date
+    var grouped = Model.Slots.GroupBy(s => s.Date.Date).OrderBy(g => g.Key);
+
+    <div class="accordion" id="availabilityAccordion">
+        @foreach (var day in grouped)
+        {
+            var headingId = $"h-{day.Key:yyyyMMdd}";
+            var collapseId = $"c-{day.Key:yyyyMMdd}";
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="@headingId">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#@collapseId">
+                        @day.Key.ToString("dddd, dd MMM yyyy")
+                    </button>
+                </h2>
+                <div id="@collapseId" class="accordion-collapse collapse" data-bs-parent="#availabilityAccordion">
+                    <div class="accordion-body">
+                        <div class="row">
+                            @foreach (var slot in day)
+                            {
+                                <div class="col-6 col-md-3 mb-3">
+                                    <div class="card text-center">
+                                        <div class="card-body">
+                                            <div class="mb-2"><strong>@slot.SlotStartTime.ToString(@"hh\:mm")</strong> — @slot.SlotEndTime.ToString(@"hh\:mm")</div>
+                                            <form asp-action="ConfirmAppointment" asp-controller="Common" method="post">
+                                                <input type="hidden" name="doctorId" value="@slot.DoctorId" />
+                                                <input type="hidden" name="date" value="@slot.Date.ToString("o")" />
+                                                <input type="hidden" name="startTime" value="@slot.SlotStartTime.ToString()" />
+                                                <button type="submit" class="btn btn-sm btn-success">Book</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

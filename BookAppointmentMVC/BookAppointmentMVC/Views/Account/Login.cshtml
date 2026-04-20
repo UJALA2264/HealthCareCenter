@@ -1,0 +1,89 @@
+﻿@{
+    ViewBag.Title = "Login";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <!-- Login Card -->
+            <div id="Logindiv" class="card shadow-sm p-4">
+                <h3 class="text-center mb-3">Book Appointment</h3>
+                <h5 class="text-center text-muted mb-4">Login</h5>
+
+                <form asp-controller="Account" asp-action="Login" method="post">
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                            <input type="email" name="email" class="form-control" required />
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Password</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                            <input type="password" name="password" class="form-control" required />
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary">Login</button>
+                        <button type="button" class="btn btn-outline-success" id="Signupbtn">Signup</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Signup Card -->
+            <div id="Signupdiv" class="card shadow-sm p-4 mt-4" style="display:none;">
+                <h3 class="text-center mb-3">Book Appointment</h3>
+                <h5 class="text-center text-muted mb-4">Register</h5>
+
+                <form asp-controller="Account" asp-action="Register" method="post">
+                    <div class="mb-3">
+                        <label class="form-label">Name</label>
+                        <input type="text" name="name" class="form-control" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" name="email" class="form-control" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Password</label>
+                        <input type="password" name="password" class="form-control" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Role</label>
+                        <select name="role" class="form-select" required>
+                            <option value="Patient">Patient</option>
+                            <option value="Doctor">Doctor</option>
+                            <option value="Admin">Admin</option>
+                        </select>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                    <p class="mt-3 text-center">Already registered? <a href="#" id="Loginbtn">Login</a></p>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $("#Signupbtn").on("click", function () {
+            $("#Logindiv").slideUp();
+            $("#Signupdiv").slideDown();
+        });
+
+        $("#Loginbtn").on("click", function () {
+            $("#Signupdiv").slideUp();
+            $("#Logindiv").slideDown();
+        });
+    </script>
+}
